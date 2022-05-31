@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Security.Cryptography;
 
 namespace BankApp
 {
@@ -25,6 +26,7 @@ namespace BankApp
 
         public MainWindow()
         {
+            AddToUsersList(new User("admin", GetHashString("admin")));
             InitializeComponent();
             ReadFromFile();
             
@@ -33,7 +35,7 @@ namespace BankApp
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
             string login = LoginInput.Text;
-            string password = PasswordInput.Password;
+            string password = GetHashString(PasswordInput.Password);
 
             bool logged = false;
 
@@ -62,8 +64,8 @@ namespace BankApp
         private void RegisterButton_Click(object sender, RoutedEventArgs e)
         {
             string username = LoginInput.Text;
-            string password = PasswordInput.Password;
-            bool finded = false;
+            string password = GetHashString(PasswordInput.Password);
+            bool found = false;
 
             if (username.Length < 3)
             {
@@ -75,12 +77,12 @@ namespace BankApp
             {
                 if (username == UsersList[i].Username)
                 {
-                    finded = true;
+                    found = true;
                     MessageBox.Show("Login exist!", "Error!");
                 }
 
             }
-            if (!finded)
+            if (!found)
             {
                 RegisterMessage.Content = $"Registered Succesfully!";
                 AddToUsersList(new User(username, password));
@@ -97,7 +99,7 @@ namespace BankApp
         private void SaveToFile()
         {
             var file = new System.IO.StreamWriter(File, true, System.Text.Encoding.UTF8);
-            file.WriteLine(LoginInput.Text + " " + PasswordInput.Password);
+            file.WriteLine(LoginInput.Text + " " + GetHashString(PasswordInput.Password));
             file.Close();
         }
         public void FileRefresh()
@@ -126,6 +128,21 @@ namespace BankApp
 
             } while (text != null);
 
+
+        }
+        public static byte[] GetHash(string inputString)
+        {
+            using (HashAlgorithm algorithm = SHA256.Create())
+                return algorithm.ComputeHash(Encoding.UTF8.GetBytes(inputString));
+        }
+
+        public static string GetHashString(string inputString)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (byte b in GetHash(inputString))
+                sb.Append(b.ToString("X2"));
+
+            return sb.ToString();
         }
 
         private void LoginInput_TextChanged(object sender, TextChangedEventArgs e)
