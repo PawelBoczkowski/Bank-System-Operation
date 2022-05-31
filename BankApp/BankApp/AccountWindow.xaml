@@ -1,0 +1,21 @@
+﻿<Window x:Class="BankApp.AccountWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BankApp"
+        mc:Ignorable="d"
+        Title="AccountWindow" Height="450" Width="800">
+    <Grid>
+        <Label x:Name="AccountUserLabel" Content="Account User:" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top" FontSize="18" Width="127"/>
+        <Label x:Name="AmountTextLabel" Content="Amount of money:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="18"/>
+        <Label x:Name="MoneyLabel" Content="" HorizontalAlignment="Left" Margin="171,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" FontSize="16" Width="76"/>
+        <Label x:Name="UserLabel" Content="" HorizontalAlignment="Left" Margin="137,41,0,0" VerticalAlignment="Top" FontSize="18" Width="110"/>
+        <ListBox x:Name="TransferListBox" Margin="505,26,40,170" SelectionChanged="TransferListBox_SelectionChanged_1"/>
+        <Button x:Name="LogoutButton" Content="Logout" HorizontalAlignment="Left" Margin="359,362,0,0" VerticalAlignment="Top" FontSize="18" Click="LogoutButton_Click"/>
+        <Label x:Name="TransferToLabel" Content="Transfer to:" HorizontalAlignment="Left" Margin="505,283,0,0" VerticalAlignment="Top" FontSize="18" Width="255"/>
+        <TextBox x:Name="AmountInput" HorizontalAlignment="Left" Margin="512,322,0,0" Text="Amount" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" FontSize="16"/>
+        <Button x:Name="SendButton" Content="Send!" HorizontalAlignment="Left" Margin="637,320,0,0" VerticalAlignment="Top" FontSize="18" Click="SendButton_Click"/>
+
+    </Grid>
+</Window>
